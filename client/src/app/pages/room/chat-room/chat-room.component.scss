@@ -1,0 +1,22 @@
+mat-drawer-container {
+    height: 100vh;
+    width: 100vw;
+}
+
+#message-bar {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#message-bar > * {
+    margin: 10px;
+}
+
+mat-form-field {
+    flex: 1;
+}

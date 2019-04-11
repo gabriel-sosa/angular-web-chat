@@ -4,8 +4,16 @@ import { CommonModule } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
-const materials = [MatCardModule, MatButtonModule, MatInputModule];
+const materials = [
+  MatCardModule,
+  MatButtonModule,
+  MatInputModule,
+  MatSidenavModule,
+  MatProgressSpinnerModule
+];
 
 @NgModule({
   declarations: [],
