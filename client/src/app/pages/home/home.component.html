@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Home
+    </mat-card-title>
+    <mat-card-subtitle>
+      Welcome to web chat, create an user and join a room!
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions>
+    <a mat-button routerLink="/room/create">Create Room</a>
+    <a mat-button routerLink="/room/enter">Enter Room</a>
+    <a *ngIf="!userService.islogged()" mat-button routerLink="/user/create">
+      Create User
+    </a>
+    <a *ngIf="userService.islogged()" mat-button routerLink="/user/signout">
+      Sing Out
+    </a>
+  </mat-card-actions>
+</mat-card>

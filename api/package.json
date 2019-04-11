@@ -1,0 +1,11 @@
+{
+  "name": "web-chat-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "GS",
+  "license": "ISC"
+}
