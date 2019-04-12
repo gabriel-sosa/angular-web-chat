@@ -1,6 +1,21 @@
 <mat-drawer-container *ngIf="room">
-  <mat-drawer #drawer>Drawer content</mat-drawer>
+  <mat-drawer #drawer>
+    <mat-card>
+      <mat-card-title>{{ room.name }}</mat-card-title>
+      <mat-card-subtitle>Created by {{ room.creator.name }}</mat-card-subtitle>
+    </mat-card>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let user of room.users">
+        {{ user.name }}
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
   <mat-drawer-content>
+    <mat-list role="list" id="message-display">
+      <mat-list-item role="listitem" *ngFor="let msg of messages">
+        {{ msg.author.name }} said: {{ msg.content }}
+      </mat-list-item>
+    </mat-list>
     <div id="message-bar">
       <button mat-button (click)="drawer.toggle()">Home</button>
       <mat-form-field>
@@ -11,9 +26,16 @@
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="2"
           placeholder="write a message"
+          [formControl]="messageInput"
         ></textarea>
       </mat-form-field>
-      <button mat-button>send</button>
+      <button
+        mat-button
+        (click)="submit()"
+        disabled="{{ messageInput.invalid }}"
+      >
+        send
+      </button>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

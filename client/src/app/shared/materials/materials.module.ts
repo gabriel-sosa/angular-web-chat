@@ -6,13 +6,15 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatListModule } from "@angular/material/list";
 
 const materials = [
   MatCardModule,
   MatButtonModule,
   MatInputModule,
   MatSidenavModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatListModule
 ];
 
 @NgModule({

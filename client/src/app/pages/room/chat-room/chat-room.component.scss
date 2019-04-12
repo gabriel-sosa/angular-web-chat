@@ -1,22 +1,34 @@
 mat-drawer-container {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
+}
+
+mat-drawer {
+  padding: 10px;
 }
 
 #message-bar {
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px -5px 15px -7px #000;
+  z-index: 10;
+  background-color: #fff;
 }
 
 #message-bar > * {
-    margin: 10px;
+  margin: 10px;
+}
+
+#message-display {
+  padding-bottom: 100px;
+  z-index: 0;
 }
 
 mat-form-field {
-    flex: 1;
+  flex: 1;
 }

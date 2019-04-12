@@ -1,29 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { FormControl, Validators } from "@angular/forms";
 
-import { RoomService } from '@core/services/room.service';
-import { Room } from '@core/models/room';
+import { RoomService } from "@core/services/room.service";
+import { Room } from "@core/models/room";
+import { Message } from "@core/models/message";
 
 @Component({
-  selector: 'app-chat-room',
-  templateUrl: './chat-room.component.html',
-  styleUrls: ['./chat-room.component.scss']
+  selector: "app-chat-room",
+  templateUrl: "./chat-room.component.html",
+  styleUrls: ["./chat-room.component.scss"]
 })
 export class ChatRoomComponent implements OnInit {
   room: Room;
+  messages: Message[] = [];
+  messageInput = new FormControl("", [Validators.required]);
 
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    let id;
     this.route.params.subscribe(
-      data => id = data.id
+      data => (this.room = this.roomService.getRoom(data.id))
     );
-    this.room = this.roomService.getRoom(id);
-    console.log(this.room);
+    this.roomService.connect().subscribe((msg: Message) => {
+      this.messages.push(msg);
+    });
   }
 
+  submit(): void {
+    if (this.messageInput.valid) {
+      this.sendMessage(this.messageInput.value);
+      this.messageInput.patchValue("");
+    }
+  }
+
+  private sendMessage(msg: string): void {
+    this.roomService.sendMessage(msg);
+  }
 }
