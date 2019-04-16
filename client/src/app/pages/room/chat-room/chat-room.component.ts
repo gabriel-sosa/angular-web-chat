@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormControl, Validators } from "@angular/forms";
 
@@ -11,7 +11,7 @@ import { Message } from "@core/models/message";
   templateUrl: "./chat-room.component.html",
   styleUrls: ["./chat-room.component.scss"]
 })
-export class ChatRoomComponent implements OnInit {
+export class ChatRoomComponent implements OnInit, OnDestroy {
   room: Room;
   messages: Message[] = [];
   messageInput = new FormControl("", [Validators.required]);
@@ -28,6 +28,10 @@ export class ChatRoomComponent implements OnInit {
     this.roomService.connect().subscribe((msg: Message) => {
       this.messages.push(msg);
     });
+  }
+
+  ngOnDestroy() {
+    this.roomService.disconnect();
   }
 
   submit(): void {
