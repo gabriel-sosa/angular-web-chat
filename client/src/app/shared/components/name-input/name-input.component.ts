@@ -1,16 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { UserService } from '@core/services/user.service';
+import { UserService } from "@core/services/user.service";
 
 @Component({
-  selector: 'app-name-input',
-  templateUrl: './name-input.component.html',
-  styleUrls: ['./name-input.component.scss']
+  selector: "app-name-input",
+  templateUrl: "./name-input.component.html",
+  styleUrls: ["./name-input.component.scss"]
 })
-export class NameInputComponent implements OnInit {
-
+export class NameInputComponent {
   @Input() title: string;
   @Input() subtitle: string;
 
@@ -22,15 +21,11 @@ export class NameInputComponent implements OnInit {
     Validators.maxLength(12)
   ]);
 
-  constructor(private userService: UserService, private router: Router) { }
-
-  ngOnInit() {
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit(): void {
     if (this.name.valid) {
       this.submit.emit(this.name.value);
     }
   }
-
 }

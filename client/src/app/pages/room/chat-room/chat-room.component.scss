@@ -29,6 +29,10 @@ mat-drawer {
   z-index: 0;
 }
 
+#message-display mat-list-item {
+  margin: 5px 0;
+}
+
 mat-form-field {
   flex: 1;
 }

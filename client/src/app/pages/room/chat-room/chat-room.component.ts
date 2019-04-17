@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit, OnDestroy, AfterViewChecked } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 
 import { RoomService } from "@core/services/room.service";
@@ -10,13 +9,10 @@ import { Event } from "@core/models/event";
   templateUrl: "./chat-room.component.html",
   styleUrls: ["./chat-room.component.scss"]
 })
-export class ChatRoomComponent implements OnInit, OnDestroy {
+export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   messageInput = new FormControl("", [Validators.required]);
 
-  constructor(
-    private route: ActivatedRoute,
-    private roomService: RoomService
-  ) {}
+  constructor(private roomService: RoomService) {}
 
   ngOnInit() {
     this.roomService.connect().subscribe((msg: Event) => {
@@ -26,6 +22,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.roomService.disconnect();
+  }
+
+  ngAfterViewChecked(){
+    const matDrawer = document.querySelector("mat-drawer-content");
+    matDrawer.scroll(0, matDrawer.scrollHeight);
   }
 
   submit(): void {
