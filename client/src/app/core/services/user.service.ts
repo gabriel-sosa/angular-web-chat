@@ -6,11 +6,14 @@ import { User } from "@core/models/user";
   providedIn: "root"
 })
 export class UserService {
-  user: User;
+  private user: User;
 
   constructor() {}
   signIn(user: User): void {
     this.user = user;
+  }
+  signOut(): void {
+    this.user = null;
   }
   getUser(): User {
     return this.user;

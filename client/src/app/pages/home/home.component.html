@@ -8,7 +8,6 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
-    <a mat-button routerLink="/room/create">Create Room</a>
     <a mat-button routerLink="/room/enter">Enter Room</a>
     <a *ngIf="!userService.islogged()" mat-button routerLink="/user/create">
       Create User

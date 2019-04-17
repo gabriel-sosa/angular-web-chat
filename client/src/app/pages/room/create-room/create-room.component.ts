@@ -15,6 +15,6 @@ export class CreateRoomComponent implements OnInit {
 
   onSubmit(name: string): void {
     const id = this.roomService.createRoom(name);
-    this.router.navigate([`/room/${id}`]);
+    this.router.navigate([`/room/chat/${id}`]);
   }
 }
