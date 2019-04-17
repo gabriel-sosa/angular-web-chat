@@ -3,10 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FormControl, Validators } from "@angular/forms";
 
 import { RoomService } from "@core/services/room.service";
-import { Room } from "@core/models/room";
-import { Message } from "@core/models/message";
 import { Event } from "@core/models/event";
-import { User } from "@core/models/user";
 
 @Component({
   selector: "app-chat-room",

@@ -18,24 +18,27 @@
         role="listitem"
         *ngFor="let msg of roomService.room.messages"
       >
-        <div *ngIf="msg.type === 'message'">
-          {{ msg.content.author.name }} said: {{ msg.content.content }}
-        </div>
-        <div *ngIf="msg.type === 'users update'">{{ msg.content }}</div>
+        <app-message-display
+          *ngIf="msg.type === 'message'"
+          user="{{ msg.content.author.name }}"
+          message="{{ msg.content.content }}"
+        ></app-message-display>
+        <app-event-display
+          *ngIf="msg.type === 'users update'"
+          message="{{ msg.content }}"
+        ></app-event-display>
       </mat-list-item>
     </mat-list>
     <div id="message-bar">
       <button mat-button (click)="drawer.toggle()">Home</button>
       <mat-form-field>
-        <textarea
+        <input
           matInput
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="2"
+          autocomplete="off"
           placeholder="write a message"
           [formControl]="messageInput"
-        ></textarea>
+          (keyup.enter)="submit()"
+        >
       </mat-form-field>
       <button
         mat-button
