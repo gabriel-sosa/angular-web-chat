@@ -5,6 +5,8 @@ import { FormControl, Validators } from "@angular/forms";
 import { RoomService } from "@core/services/room.service";
 import { Room } from "@core/models/room";
 import { Message } from "@core/models/message";
+import { Event } from "@core/models/event";
+import { User } from "@core/models/user";
 
 @Component({
   selector: "app-chat-room",
@@ -12,8 +14,6 @@ import { Message } from "@core/models/message";
   styleUrls: ["./chat-room.component.scss"]
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {
-  room: Room;
-  messages: Message[] = [];
   messageInput = new FormControl("", [Validators.required]);
 
   constructor(
@@ -22,11 +22,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(
-      data => (this.room = this.roomService.getRoom(data.id))
-    );
-    this.roomService.connect().subscribe((msg: Message) => {
-      this.messages.push(msg);
+    this.roomService.connect().subscribe((msg: Event) => {
+      this.roomService.room.messages.push(msg);
     });
   }
 

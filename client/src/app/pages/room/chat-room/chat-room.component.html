@@ -1,19 +1,27 @@
-<mat-drawer-container *ngIf="room">
+<mat-drawer-container *ngIf="roomService.room">
   <mat-drawer #drawer>
     <mat-card>
-      <mat-card-title>{{ room.name }}</mat-card-title>
-      <mat-card-subtitle>Created by {{ room.creator.name }}</mat-card-subtitle>
+      <mat-card-title>{{ roomService.room.name }}</mat-card-title>
     </mat-card>
     <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let user of room.users">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let user of roomService.room.users"
+      >
         {{ user.name }}
       </mat-list-item>
     </mat-list>
   </mat-drawer>
   <mat-drawer-content>
     <mat-list role="list" id="message-display">
-      <mat-list-item role="listitem" *ngFor="let msg of messages">
-        {{ msg.author.name }} said: {{ msg.content }}
+      <mat-list-item
+        role="listitem"
+        *ngFor="let msg of roomService.room.messages"
+      >
+        <div *ngIf="msg.type === 'message'">
+          {{ msg.content.author.name }} said: {{ msg.content.content }}
+        </div>
+        <div *ngIf="msg.type === 'users update'">{{ msg.content }}</div>
       </mat-list-item>
     </mat-list>
     <div id="message-bar">
@@ -39,4 +47,4 @@
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-<mat-spinner *ngIf="!room"></mat-spinner>
+<mat-spinner *ngIf="!roomService.room"></mat-spinner>

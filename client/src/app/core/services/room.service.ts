@@ -4,6 +4,8 @@ import io from "socket.io-client";
 
 import { Room } from "@core/models/room";
 import { Message } from "@core/models/message";
+import { Event } from "@core/models/event";
+import { User } from "@core/models/user";
 import { UserService } from "./user.service";
 
 @Injectable({
@@ -11,8 +13,8 @@ import { UserService } from "./user.service";
 })
 export class RoomService {
   room: Room;
-  receive: (msg: Message) => void;
   socket: any;
+  receive: (msg: Event) => void;
 
   constructor(private userService: UserService) {}
 
@@ -27,7 +29,7 @@ export class RoomService {
     return this.room;
   }
 
-  connect(): Observable<Message> {
+  connect(): Observable<Event> {
     this.socket = io("http://localhost:3000", {
       query: {
         id: this.room.name,
@@ -35,25 +37,29 @@ export class RoomService {
       }
     });
 
-    this.socket.on("user joined", user => {
-      console.log(`user ${user} joined the room`);
+    this.socket.on("user joined", (user: string, sockets: Event) => {
+      console.log("users update: ", sockets);
+      this.room.users = sockets.content as User[];
+      this.receive(new Event("users update", `user ${user} joined the room!`));
     });
 
-    this.socket.on("user left", user => {
-      console.log(`user ${user} left`);
+    this.socket.on("user left", (user: string, sockets: Event) => {
+      console.log("users update:", sockets);
+      this.room.users = sockets.content as User[];
+      this.receive(new Event("users update", `user ${user} left`));
     });
 
-    this.socket.on("chat message", (msg: Message) => {
+    this.socket.on("chat message", (msg: Event) => {
       console.log("message received", msg);
-      this.receive(msg);
+      this.room.messages.push(msg);
     });
 
-    return new Observable<Message>(observable => {
-      this.receive = (msg: Message) => observable.next(msg);
+    return new Observable<Event>(observable => {
+      this.receive = (msg: Event) => observable.next(msg);
     });
   }
 
-  disconnect(){
+  disconnect() {
     this.socket.disconnect();
   }
 
